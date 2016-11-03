@@ -1,0 +1,29 @@
+{
+  "name": "pushthat",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/satnami/pushthat.git"
+  },
+  "keywords": [
+    "push",
+    "pusher"
+  ],
+  "author": "satnami",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/satnami/pushthat/issues"
+  },
+  "homepage": "https://github.com/satnami/pushthat#readme",
+  "dependencies": {
+    "ascoltatori": "^3.1.0",
+    "express": "^4.14.0",
+    "mongoose": "^4.6.5",
+    "redis": "^2.6.3"
+  }
+}
