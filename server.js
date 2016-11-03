@@ -21,9 +21,6 @@ var dbConfig = {
 require('./lib/queue')(queueConfig);
 require('./lib/database')(dbConfig);
 
-app.use('/public', express.static(path.join(__dirname, '/public')));
-
-
 app.get('/', function(req, res) {
     res.status(200).send("Let's start from here");
 });
