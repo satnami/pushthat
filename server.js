@@ -1,32 +1,40 @@
 var express = require('express'),
-    redis = require('redis');
+    http = require('http'),
+    html = require('./lib/html'),
+    link = require('./model/links'),
+    config = require('./config/index');
 
+var port = config.port;
 var app = express();
 
-var queueConfig = {
-    type: 'redis',
-    redis: redis,
-    host: process.env.REDIS_URI || 'localhost',
-    port: process.env.REDIS_PORT || 6379,
-    password: process.env.REDIS_PASS || null,
-    db: process.env.REDIS_DB || 12,
-    return_buffers: true // to handle binary payloads
-};
+require('./lib/database')(config.dbConfig);
 
-var dbConfig = {
-    uri: process.env.MONGODB_URI || '',
-    opts: {}
-};
-
-require('./lib/queue')(queueConfig);
-require('./lib/database')(dbConfig);
-
-app.get('/', function(req, res) {
-    res.status(200).send("Let's start from here");
+var ascoltatori = require('./lib/queue')(config.queueConfig).ascoltatori;
+ascoltatori.then(function (ascoltatore) {
+    ascoltatore.subscribe('*', function () {
+        var queue = arguments['0'];
+        var message = arguments['1'];
+        switch (queue) {
+            case 'link':
+                if (message.url != null && message.url != "") {
+                    html(message.url, function(err, htmlBody) {
+                        if(!err) {
+                            link.saveLink({url: message.url, html: htmlBody});
+                        }
+                    });
+                }
+                break;
+            default:
+                break;
+        }
+    });
 });
 
-var port = process.env.PORT || 1337;
-var httpServer = require('http').createServer(app);
-httpServer.listen(port, function() {
+require('./config/express')(app);
+require('./lib/api')(app, ascoltatori);
+
+var httpServer = http.createServer(app);
+
+httpServer.listen(port, function () {
     console.log('pushthat running on port ' + port + '.');
 });

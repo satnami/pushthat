@@ -22,8 +22,21 @@
   "homepage": "https://github.com/satnami/pushthat#readme",
   "dependencies": {
     "ascoltatori": "^3.1.0",
+    "body-parser": "^1.15.2",
+    "compression": "^1.6.2",
+    "cors": "^2.8.1",
     "express": "^4.14.0",
-    "mongoose": "^4.6.5",
-    "redis": "^2.6.3"
+    "method-override": "^2.3.6",
+    "mongodb": "*",
+    "mongoose": "4.1.10",
+    "phantomjs-prebuilt": "^2.1.13",
+    "q": "^1.4.1",
+    "redis": "^2.6.3",
+    "request": "^2.78.0",
+    "serve-static": "^1.11.1",
+    "swig": "^1.4.2",
+    "webdriverio": "^4.3.0",
+    "webpage": "^0.3.0",
+    "webshot": "^0.18.0"
   }
 }
